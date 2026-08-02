@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\UserRegisterRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class UserController extends Controller
 {
     /**
-     * 新規ユーザー登録画面の表示 (UI-02-02)
+     * 新規ユーザー登録画面の初期表示
      */
     public function create()
     {
@@ -18,37 +20,32 @@ class UserController extends Controller
     }
 
     /**
-     * 新規ユーザー登録処理
+     * ユーザー情報登録処理
      */
-    public function store(Request $request)
+    public function store(UserRegisterRequest $request)
     {
-        // 1. 設計書に基づくバリデーション処理
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', 'in:1,2'],
-        ], [
-            // カスタムエラーメッセージ（任意）
-            'name.required' => 'お名前を入力してください。',
-            'email.required' => 'メールアドレスを入力してください。',
-            'email.email' => '正しいメールアドレスの形式で入力してください。',
-            'email.unique' => 'このメールアドレスは既に登録されています。',
-            'password.required' => 'パスワードを入力してください。',
-            'password.min' => 'パスワードは8文字以上で入力してください。',
-            'password.confirmed' => '確認用パスワードと一致しません。',
-            'role.required' => '権限区分を選択してください。',
-        ]);
+        DB::beginTransaction();
+        try {
+            // users テーブルへ新規登録
+            User::create([
+                'name'     => $request->input('name'),
+                'email'    => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'role'     => $request->input('role'),
+            ]);
 
-        // 2. DBへの登録処理（パスワードをハッシュ化）
-        User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role' => $validated['role'],
-        ]);
+            DB::commit();
 
-        // 3. フラッシュメッセージを保持して管理トップへリダイレクト
-        return redirect()->route('admin.top')->with('success', 'ユーザーを正常に登録しました。');
+            return redirect()
+                ->route('admin.users.index')
+                ->with('success', 'ユーザーを登録しました。');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+
+            return back()
+                ->withInput()
+                ->with('error', '登録処理に失敗しました。');
+        }
     }
 }
