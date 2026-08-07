@@ -40,6 +40,9 @@ Route::post('/admin/login', [AuthController::class, 'login']);
 // 本番化時は Route::middleware(['auth', 'can:admin']) で囲んでください
 // --------------------------------------------------------------------------
 Route::prefix('admin')->name('admin.')->group(function () {
+    // ログアウト処理（ルート名: admin.logout / URL: /admin/logout）
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
     // UI-02-04: 管理＿トップ
     Route::get('/top', function () {
         return view('admin.top');

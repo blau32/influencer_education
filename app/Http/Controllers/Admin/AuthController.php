@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\LoginRequest; // FormRequestの読み込みを追加
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,36 +14,38 @@ class AuthController extends Controller
      */
     public function showLoginForm()
     {
+        // 既にログイン済み（かつ管理者権限）の場合はトップ画面へリダイレクト
+        if (Auth::check() && Auth::user()->role === 1) {
+            return redirect()->route('admin.top');
+        }
+
         return view('admin.login');
     }
 
     /**
      * ログイン実行処理
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request) // FormRequestに変更してバリデーションを分離
     {
-        // 1. バリデーション
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ], [
-            'email.required' => 'メールアドレスを入力してください。',
-            'email.email' => '正しいメールアドレスの形式で入力してください。',
-            'password.required' => 'パスワードを入力してください。',
-        ]);
+        $credentials = [
+            'email'    => $request->input('email'),
+            'password' => $request->input('password'),
+            'role'     => 1, // 管理者権限（role = 1）のみログイン許可
+        ];
 
-        // 2. 認証処理（管理者権限 role = 2 のユーザーのみログインを許可する場合）
-        if (Auth::attempt(array_merge($credentials, ['role' => 2]))) {
+        // 認証処理
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            
-            // 管理トップへリダイレクト
-            return redirect()->intended(route('admin.top'));
+
+            return redirect()->route('admin.top');
         }
 
-        // 3. 認証失敗時
-        return back()->withErrors([
-            'email' => 'ログイン情報が正しくないか、管理者権限がありません。',
-        ])->onlyInput('email');
+        // 認証失敗時
+        return back()
+            ->withInput($request->only('email'))
+            ->withErrors([
+                'login_error' => 'メールアドレスまたはパスワードが正しくありません。',
+            ]);
     }
 
     /**
