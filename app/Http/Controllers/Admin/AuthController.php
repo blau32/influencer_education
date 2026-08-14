@@ -3,49 +3,37 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\LoginRequest; // FormRequestの読み込みを追加
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     /**
-     * 管理者ログイン画面の表示 (UI-02-03)
+     * UI-02-03: 管理＿ログイン画面表示
      */
     public function showLoginForm()
     {
-        // 既にログイン済み（かつ管理者権限）の場合はトップ画面へリダイレクト
-        if (Auth::check() && Auth::user()->role === 1) {
-            return redirect()->route('admin.top');
-        }
-
-        return view('admin.login');
+        return view('admin.auth.login');
     }
 
     /**
-     * ログイン実行処理
+     * 管理＿ログイン処理
      */
-    public function login(LoginRequest $request) // FormRequestに変更してバリデーションを分離
+    public function login(Request $request)
     {
-        $credentials = [
-            'email'    => $request->input('email'),
-            'password' => $request->input('password'),
-            'role'     => 1, // 管理者権限（role = 1）のみログイン許可
-        ];
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        // 認証処理
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-            return redirect()->route('admin.top');
+            return redirect()->intended(route('admin.top'));
         }
 
-        // 認証失敗時
-        return back()
-            ->withInput($request->only('email'))
-            ->withErrors([
-                'login_error' => 'メールアドレスまたはパスワードが正しくありません。',
-            ]);
+        return back()->withErrors([
+            'email' => 'ログインIDまたはパスワードが正しくありません。',
+        ])->onlyInput('email');
     }
 
     /**
@@ -53,8 +41,8 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
+        // ログインセッションの破棄とトークンの再生成
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

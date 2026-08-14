@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\UserRegisterRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Exception;
 
 class UserController extends Controller
 {
     /**
-     * 新規ユーザー登録画面の初期表示
+     * UI-02-02: 管理＿新規ユーザー登録画面表示
      */
     public function create()
     {
@@ -20,32 +18,22 @@ class UserController extends Controller
     }
 
     /**
-     * ユーザー情報登録処理
+     * ユーザー登録処理
      */
-    public function store(UserRegisterRequest $request)
+    public function store(Request $request)
     {
-        DB::beginTransaction();
-        try {
-            // users テーブルへ新規登録
-            User::create([
-                'name'     => $request->input('name'),
-                'email'    => $request->input('email'),
-                'password' => Hash::make($request->input('password')),
-                'role'     => $request->input('role'),
-            ]);
+        $validated = $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
-            DB::commit();
+        User::create([
+            'name'     => $validated['name'],
+            'email'    => $validated['email'],
+            'password' => Hash::make($validated['password']),
+        ]);
 
-            return redirect()
-                ->route('admin.users.index')
-                ->with('success', 'ユーザーを登録しました。');
-
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            return back()
-                ->withInput()
-                ->with('error', '登録処理に失敗しました。');
-        }
+        return redirect()->route('admin.top')->with('success', 'ユーザーを登録しました。');
     }
 }

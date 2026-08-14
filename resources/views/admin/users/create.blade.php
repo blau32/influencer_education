@@ -1,79 +1,41 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新規ユーザー登録</title>
-    <style>
-        .form-group { margin-bottom: 15px; }
-        .error { color: red; font-size: 0.875rem; display: block; }
-        .alert-danger { color: red; margin-bottom: 15px; }
-    </style>
-</head>
-<body>
-    <h2>新規ユーザー登録</h2>
+@extends('layouts.admin')
 
-    {{-- DBエラー等のフラッシュメッセージ --}}
-    @if (session('error'))
-        <div class="alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
+@section('title', '新規ユーザー登録')
 
-    <form action="{{ route('admin.users.store') }}" method="POST">
+@section('content')
+<div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow">
+    <h1 class="text-xl font-bold mb-6">新規ユーザー登録</h1>
+
+    <form action="{{ route('admin.users.store') }}" method="POST" class="space-y-4">
         @csrf
 
-        {{-- 氏名 --}}
-        <div class="form-group">
-            <label for="name">氏名 <span style="color:red;">*</span></label><br>
-            <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="例）山田 太郎">
-            @error('name')
-                <span class="error">{{ $message }}</span>
-            @enderror
+        <div>
+            <label class="block text-sm font-medium mb-1">氏名 <span class="text-red-500">*</span></label>
+            <input type="text" name="name" value="{{ old('name') }}" required class="w-full border rounded p-2 text-sm">
+            @error('name')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
         </div>
 
-        {{-- メールアドレス --}}
-        <div class="form-group">
-            <label for="email">メールアドレス <span style="color:red;">*</span></label><br>
-            <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="example@example.com">
-            @error('email')
-                <span class="error">{{ $message }}</span>
-            @enderror
+        <div>
+            <label class="block text-sm font-medium mb-1">メールアドレス <span class="text-red-500">*</span></label>
+            <input type="email" name="email" value="{{ old('email') }}" required class="w-full border rounded p-2 text-sm">
+            @error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
         </div>
 
-        {{-- パスワード --}}
-        <div class="form-group">
-            <label for="password">パスワード <span style="color:red;">*</span></label><br>
-            <input type="password" id="password" name="password">
-            @error('password')
-                <span class="error">{{ $message }}</span>
-            @enderror
+        <div>
+            <label class="block text-sm font-medium mb-1">パスワード <span class="text-red-500">*</span></label>
+            <input type="password" name="password" required class="w-full border rounded p-2 text-sm">
+            @error('password')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
         </div>
 
-        {{-- パスワード（確認） --}}
-        <div class="form-group">
-            <label for="password_confirmation">パスワード（確認） <span style="color:red;">*</span></label><br>
-            <input type="password" id="password_confirmation" name="password_confirmation">
+        <div>
+            <label class="block text-sm font-medium mb-1">パスワード（確認用） <span class="text-red-500">*</span></label>
+            <input type="password" name="password_confirmation" required class="w-full border rounded p-2 text-sm">
         </div>
 
-        {{-- 権限 --}}
-        <div class="form-group">
-            <label for="role">権限 <span style="color:red;">*</span></label><br>
-            <select id="role" name="role">
-                <option value="2" {{ old('role', '2') == '2' ? 'selected' : '' }}>受講生</option>
-                <option value="1" {{ old('role') == '1' ? 'selected' : '' }}>管理者</option>
-            </select>
-            @error('role')
-                <span class="error">{{ $message }}</span>
-            @enderror
-        </div>
-
-        {{-- ボタン群 --}}
-        <div class="form-group">
-            <button type="submit">登録</button>
-            {{-- 修正箇所: route('login') -> route('admin.login') --}}
-            <a href="{{ route('admin.login') }}">ログインはこちら</a>
+        <div class="flex justify-between items-center pt-4">
+            <a href="{{ route('admin.top') }}" class="text-sm text-gray-600 hover:underline">戻る</a>
+            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded text-sm hover:bg-indigo-700">登録する</button>
         </div>
     </form>
-</body>
-</html>
+</div>
+@endsection

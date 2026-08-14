@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // 🔑 admin (管理者権限) のルールを定義 (role が 2 のユーザーを許可)
         Gate::define('admin', function (User $user) {
-            return (int)$user->role === 2;
+            return (int)$user->role === 1;
         });
     }
 }
