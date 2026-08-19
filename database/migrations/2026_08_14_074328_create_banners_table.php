@@ -10,9 +10,10 @@ return new class extends Migration
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('title');        // バナータイトル / 識別名
-            $table->string('image_path');   // 画像ファイルパス
-            $table->string('url')->nullable(); // リンク先URL（任意）
+            $table->string('title', 100)->comment('バナータイトル');
+            $table->string('image_path')->comment('画像保存パス');
+            $table->string('redirect_url', 2048)->comment('遷移先URL');
+            $table->integer('sort_order')->default(1)->comment('表示順（1~999）');
             $table->timestamps();
         });
     }

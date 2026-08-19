@@ -12,6 +12,7 @@ class Banner extends Model
     protected $fillable = [
         'title',
         'image_path',
-        'url',
+        'redirect_url',
+        'sort_order',
     ];
 }
