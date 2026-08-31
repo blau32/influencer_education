@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('curriculum_progress', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('curriculum_id')->constrained('curriculums');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('curriculums_id')->constrained('curriculums');
+            $table->foreignId('users_id')->constrained('users');
             $table->tinyInteger('clear_flg')->default(0);
-            $table->dateTime('last_access_date');
             $table->timestamps();
         });
     }
