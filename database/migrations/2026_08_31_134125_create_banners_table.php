@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('classes_clear_checks', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('users_id')->constrained('users');
-            $table->foreignId('grade_id')->constrained('grades');
-            $table->tinyInteger('clear_flg')->default(0);
+            $table->string('image',255);
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classes_clear_checks');
+        Schema::dropIfExists('banners');
     }
 };
