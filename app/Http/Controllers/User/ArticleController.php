@@ -9,8 +9,9 @@ use App\Models\Article;
 
 class ArticleController extends Controller
 {
-    public function showArticle()
+    public function showArticle(int $id)
     {
-       return view('user.article.blade.php',['articles' => Article::all()]);
+        $article = Article::findOrFail($id);
+        return view('user.article', ['articles' => $article]);
     }
 }

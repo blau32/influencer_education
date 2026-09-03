@@ -1,5 +1,7 @@
-<x-layout>
-    <div class="container">
-      
-    </div>
-</x-layout>
+@extends('layouts.app')
+
+@section('content')
+  {{ $articles-> }}
+  {{ $articles->title }}
+  {{ $articles->content }}
+@endsection
