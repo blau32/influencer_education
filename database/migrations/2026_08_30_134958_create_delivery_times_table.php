@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('classes_clear_checks', function (Blueprint $table) {
+        Schema::create('delivery_times', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('users_id')->constrained('users');
-            $table->foreignId('grade_id')->constrained('grades');
-            $table->tinyInteger('clear_flg')->default(0);
+            $table->foreignId('curriculums_id')->constrained('curriculums');
+            $table->dateTime('delivery_from');
+            $table->dateTime('delivery_to');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classes_clear_checks');
+        Schema::dropIfExists('delivery_times');
     }
 };
