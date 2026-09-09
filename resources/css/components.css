@@ -1,0 +1,36 @@
+/* 共通コンポーネント */
+.nav {
+    background-color: #f87a3a;
+    padding: 3%;
+    width: 100%;
+}
+
+.nav ul {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.nav li {
+  padding-right: 20px;
+  font-size: 1.2em;
+  color: white;
+  background-color: rgb(18, 153, 155);
+  padding: 2px 15px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.nav li.logout {
+  margin-left: auto;
+  background-color: transparent;
+  color: black;
+}
+
+.contents {
+  margin: 50px;
+}
+
+.back {
+  margin-left: 20px;
+}
