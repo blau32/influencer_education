@@ -26,13 +26,13 @@
 
   <div class="contents">
     <div class="date">
-      <p>{{ $articles->posted_date->format('Y年m月d日') }}</p>
+      <p>{{ $article->posted_date->format('Y年m月d日') }}</p>
     </div>
     <div class="title">
-      <h1>{{ $articles->title }}</h1>
+      <h1>{{ $article->title }}</h1>
     </div>
     <div class="article_contents">
-      <p>{{ $articles->article_contents }}</p>
+      <p>{{ $article->article_contents }}</p>
     </div>
   </div>
 

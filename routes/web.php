@@ -20,10 +20,11 @@ Route::get('/', function () {
 });
 
 Route::prefix('user')->namespace('User')->name('user.')->group(function () {
-    // ログインページ
-    // Route::get('/login',[User\LoginController::class, 'showLoginForm'])->name('show.login');
+    
+    // ログイン
+    Route::get('/login',[User\LoginController::class, 'showLoginForm'])->name('show.login');
 
-    // 登録ページ
+    // 登録
     // Route::get('/register',[User\RegisterController::class, 'showRegisterForm'])->name('show.register');
 
     //トップページ

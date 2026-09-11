@@ -1,0 +1,301 @@
+# Laravel / CSS 学習メモ
+
+このプロジェクト作業中の Q&A まとめ（Obsidian 用）
+
+---
+
+## 1. `$this->call([GradesTableSeeder::class]);` の文法構造
+
+### 質問
+この書き方の文法構造を知りたい。
+
+### 回答
+「今の Seeder インスタンスの `call` メソッドに、配列で別 Seeder のクラス名を渡している」という Laravel の書き方。
+
+| 部分 | 意味 |
+|------|------|
+| `$this` | 今いるクラスのインスタンス |
+| `->` | オブジェクトのメソッド呼び出し |
+| `call(...)` | 親クラス `Illuminate\Database\Seeder` のメソッド。別 Seeder を実行する |
+| `[ ... ]` | PHP の配列 |
+| `GradesTableSeeder::class` | クラス名を文字列化（例: `"Database\Seeders\GradesTableSeeder"`） |
+| `;` | 文の終わり |
+
+```php
+$this->call([
+    GradesTableSeeder::class,
+    UsersTableSeeder::class, // 複数も可
+]);
+```
+
+通常は **`DatabaseSeeder` の `run()`** から子 Seeder を呼ぶ。子自身が自分を `call` すると意図しない再帰になるので注意。
+
+---
+
+## 2. `ul` の左側の余白が消えない
+
+### 質問
+`ul` の左余白が消えない。
+
+### 回答
+主な原因候補:
+
+1. **Bootstrap のデフォルト**（`ul { padding-left: 2rem; }` など）
+2. **余白の正体が `ul` ではなく `.container`** の左右 padding
+
+対策例:
+
+```css
+.nav ul {
+  margin: 0;
+  padding: 0;
+  padding-inline-start: 0; /* 論理プロパティ側も消す */
+  list-style: none;
+}
+
+.nav li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+```
+
+補足: クラス名 `nav` は Bootstrap の `.nav` と衝突しやすいので、`.global-nav` など別名の方が安全。
+
+切り分け: DevTools で `ul` を選択し、padding / margin のどちらが残っているか確認する。
+
+---
+
+## 3. `body` の 8px マージン / CSSリセットが効かない / ナビのリンク方法
+
+### 質問
+- `body` になぜか 8px のマージンがかかっていた
+- CSSリセットがなぜか効いていなかった
+- nav に複数ボタンを置くとき、`a` と `form/action` どちらが良いか
+
+### 回答
+
+#### body の 8px
+ブラウザのデフォルト（UA スタイル）。リセットや `body { margin: 0; }` が効いていないと残りやすい。
+
+#### リセットが効かなかった理由
+CDN URL が不完全なことがある。
+
+```html
+<!-- NG例: CSS本体まで届かないことがある -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@4.0.1/">
+
+<!-- OK例 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@4.0.1/destyle.min.css">
+```
+
+Network で `.css` が 200 で取れているか確認する。
+
+#### ナビは `a` か `form` か
+
+| 用途 | 使うもの |
+|------|----------|
+| 別ページへ移動（時間割・進捗・プロフィールなど） | **`<a href="...">`** |
+| サーバーの状態を変える（ログアウト・削除など） | **`<form method="POST">`**（Laravel なら `@csrf`） |
+
+```html
+<!-- 通常のナビ -->
+<li><a href="{{ route('user.show.progress') }}" class="nav-btn">授業進捗</a></li>
+
+<!-- ログアウト（POST） -->
+<li class="logout">
+  <form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit">ログアウト</button>
+  </form>
+</li>
+```
+
+**重要:** `<button><a>...</a></button>` は無効な入れ子。  
+ページ遷移 → `a` だけ / 送信処理 → `form` 内の `button` だけ。
+
+見た目をボタン風にしたい場合は **HTML をネストせず、CSS で見た目を整える**。
+
+---
+
+## 4. list の最下部（最後の項目）を右に寄せたい
+
+### 質問
+list の最下部を右に寄せたい場合。
+
+### 回答
+`ul` が `display: flex` なら、最後の項目に `margin-left: auto`。
+
+```css
+.logout {
+  margin-left: auto;
+}
+```
+
+`margin-left: 50%` より安定する（幅が変わっても右端に張り付く）。
+
+`justify-content: left` より `flex-start` の方が一般的（必須ではない）。
+
+---
+
+## 5. logout だけ別カラーにしたい
+
+### 質問
+logout だけ別のカラーにしたい場合。
+
+### 回答
+
+```css
+.nav li.logout {
+  margin-left: auto;
+  background-color: #c0392b;
+}
+
+.nav li.logout a {
+  color: white;
+}
+```
+
+---
+
+## 6. 色が反映されない（よくある原因）
+
+### 質問
+反映されない。
+
+### 回答
+原因は主に次の2つ（＋セレクタのスペースミス）。
+
+#### A. `background-color: none` は無効
+使えるのは色指定か `transparent`。
+
+```css
+background-color: #c0392b; /* OK */
+background-color: transparent; /* OK */
+background-color: none; /* NG */
+```
+
+#### B. 詳細度で `.nav li` が勝つ
+
+| セレクタ | 詳細度 |
+|----------|--------|
+| `.nav li` | クラス1 + 要素1 → **強い** |
+| `.logout` | クラス1 → **弱い** |
+
+そのため `.logout` だけだと色が上書きされない。  
+→ `.nav li.logout` のように詳細度を上げる。
+
+#### C. スペースの有無（最重要ミス）
+
+HTML:
+
+```html
+<li class="logout">...</li>
+```
+
+```css
+/* NG: li の「中の子」の .logout を探す → マッチしない */
+.nav li .logout { }
+
+/* OK: class="logout" を持つ li 自体 */
+.nav li.logout { }
+```
+
+`li` と `.logout` の間に **スペースを入れない**。
+
+---
+
+## 7. HTML に DB 内の日付を入れる方法
+
+### 質問
+HTML に DB 内の日付を入れる方法。
+
+### 回答
+流れ: **Controller で取得 → Blade で表示**
+
+#### Controller（例）
+
+```php
+$article = Article::findOrFail($id);
+return view('user.article', ['articles' => $article]);
+```
+
+#### Blade
+
+```blade
+<p>{{ $articles->posted_date }}</p>
+<p>{{ $articles->title }}</p>
+<p>{{ $articles->article_contents }}</p>
+```
+
+#### 日付を整形したい場合
+
+Model でキャスト:
+
+```php
+// Article.php
+protected $casts = [
+    'posted_date' => 'datetime',
+];
+```
+
+Blade:
+
+```blade
+{{ $articles->posted_date->format('Y年m月d日') }}
+```
+
+キャストなしなら:
+
+```blade
+{{ \Carbon\Carbon::parse($articles->posted_date)->format('Y年m月d日') }}
+```
+
+`{{ }}` は HTML エスケープされる（日付・タイトルはそのままで可）。
+
+---
+
+## 8. 戻るボタンの URL（前に開いていたページへ）
+
+### 質問
+特定ページ固定ではなく、前に開いていたページに戻したい。
+
+### 回答
+
+#### 方法1: JavaScript（ブラウザ履歴）
+
+```blade
+<a href="javascript:history.back()">←戻る</a>
+```
+
+#### 方法2: Laravel（推奨しやすい）
+
+```blade
+<a href="{{ url()->previous() }}">←戻る</a>
+```
+
+| 方法 | 向いているケース |
+|------|------------------|
+| `history.back()` | ブラウザ履歴どおりに戻したい |
+| `url()->previous()` | `href` に前URLを出したい |
+
+直接URLを開いた場合など、前ページが無いこともある。フォールバック例:
+
+```blade
+<a href="{{ url()->previous() !== url()->current() ? url()->previous() : route('user.show.curriculum') }}">
+  ←戻る
+</a>
+```
+
+---
+
+## クイックリファレンス
+
+- Seeder 呼び出し: `$this->call([FooSeeder::class]);`
+- `ul` 左余白: `padding: 0` + `padding-inline-start: 0` + `list-style: none`
+- リセットCDN: ファイル名まで指定（例: `destyle.min.css`）
+- ナビ遷移: `a` / 状態変更: `form` + POST + `@csrf`
+- 最後の li を右寄せ: `margin-left: auto`（flex 前提）
+- 特定 li の色: `.nav li.logout`（スペースなし）+ 有効な色指定
+- DB日付表示: `{{ $model->posted_date->format('Y年m月d日') }}`
+- 戻る: `{{ url()->previous() }}` または `history.back()`

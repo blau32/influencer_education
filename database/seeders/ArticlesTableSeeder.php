@@ -15,11 +15,11 @@ class ArticlesTableSeeder extends Seeder
      */
     public function run()
     {
-                        DB::table('articles')->insert([
-        [
-            'title' => 'test',
-            'article_contents' => 'this is a test article',
-            'posted_date' => '2026-01-01 00:00:00',
+        DB::table('articles')->insert([
+            [
+                'title' => 'test',
+                'article_contents' => 'this is a test article',
+                'posted_date' => '2026-01-01 00:00:00',
             ],
         ]);
     }
