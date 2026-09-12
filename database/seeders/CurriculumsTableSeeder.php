@@ -18,11 +18,11 @@ class CurriculumsTableSeeder extends Seeder
         DB::table('curriculums')->insert([
             [
                 'title' => '授業タイトル１',
-                'thumbnail' => '#',
+                'thumbnail' => 'null',
                 'description' => 'これはテストです',
-                'video_url' => '#',
-                'alway_delivery_flg' => '0',
-                'grade_id' => '0',
+                'video_url' => 'null',
+                'alway_delivery_flg' => 0,
+                'grade_id' => '1',
             ],
         ]);
     }

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CurriculumProgress extends Model
 {
     use HasFactory;
+
+    protected $table = 'curriculum_progress';
+
 }
