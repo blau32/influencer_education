@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
                 'name_kana' => 'テスト',
                 'email' => 'test@example.com',
                 'password' => Hash::make('password'),
-                'profile_image' => '\profile\プロフィール設定.png',
+                'profile_image' => '/profile/プロフィール設定.png',
                 'grade_id' => '1',
             ],
         ]);
