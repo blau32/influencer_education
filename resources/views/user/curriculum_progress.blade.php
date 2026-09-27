@@ -36,17 +36,39 @@
 
     <div class="curriculum_progress">
       @foreach ($grades as $grade)
+
       <div class="curriculum_progress_item">
-        <h2 class="curriculum_progress_item_title">{{ $grade->name }}</h2>
+
+        <h2 class="curriculum_progress_item_title {{ str_contains($grade->name, '高校') ? 'high-school' : '' }}">
+          {{ $grade->name }}
+        </h2>
 
         @foreach ($grade->curriculums as $curriculum)
-        <p>{{ $curriculum->title }}</p>
+
+        <div class="curriculum_item">
+
+          <span>{{ $curriculum->title }}</span>
+
+          <input
+            type="checkbox"
+            disabled
+            @checked(
+            isset($progresses[$curriculum->id])
+          && $progresses[$curriculum->id]->clear_flg == 1
+          )
+          >
+
+        </div>
+
         @endforeach
+
       </div>
+
       @endforeach
     </div>
-
   </div>
+
+</div>
 
 </div>
 @endsection

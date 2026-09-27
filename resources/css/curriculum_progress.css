@@ -21,7 +21,11 @@ margin-left: 20px;
 .curriculum_progress_item_title {
   display: inline-block;
   color: white;
-  background-color: aqua;
+  background-color: rgb(26, 175, 175);
   border-radius: 5px;
+  padding: 5px 5px;
+}
 
+.curriculum_progress_item_title.high-school {
+  background-color: rgb(15, 211, 103);
 }

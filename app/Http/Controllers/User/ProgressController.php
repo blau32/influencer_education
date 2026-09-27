@@ -18,6 +18,13 @@ class ProgressController extends Controller
 
         $grades = Grade::with('curriculums')->get();
 
-        return view('user/curriculum_progress', compact('user', 'grades'));
+        $progresses = CurriculumProgress::where('users_id', $user->id)
+            ->get()
+            ->keyBy('curriculums_id');
+
+        return view(
+            'user.curriculum_progress',
+            compact('user', 'grades', 'progresses')
+        );
     }
 }
