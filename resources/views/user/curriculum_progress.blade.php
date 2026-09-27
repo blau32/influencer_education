@@ -30,7 +30,12 @@
       <img src="{{ asset('storage/' . $user->profile_image) }}">
       <div class="user_info_text">
         <p>{{ $user->name }}さんの授業進捗</p>
-        <p>現在の学年：{{ $user->grade->name }}</p>
+        <p>
+        現在の学年：
+        <span class="current_grade {{ str_contains($user->grade->name, '高校') ? 'high-school' : '' }}">
+          {{ $user->grade->name }}
+        </span>
+        </p>
       </div>
     </div>
 

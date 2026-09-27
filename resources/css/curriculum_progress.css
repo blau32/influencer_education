@@ -11,6 +11,17 @@ margin-top: 100px;
 margin-left: 20px;
 }
 
+.current_grade {
+  color: white;
+  background-color: rgb(26, 175, 175);
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+
+.current_grade.high-school {
+  background-color: rgb(15, 211, 103);
+}
+
 .curriculum_progress {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 1行に3つ */
