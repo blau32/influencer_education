@@ -13,17 +13,24 @@ class CurriculumsTableSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
-    {
-        DB::table('curriculums')->insert([
-            [
-                'title' => '授業タイトル１',
-                'thumbnail' => 'null',
+{
+    $gradeIds = DB::table('grades')->pluck('id');
+
+    foreach ($gradeIds as $gradeId) {
+
+        for ($i = 1; $i <= 5; $i++) {
+
+            DB::table('curriculums')->insert([
+                'title' => '授業タイトル' . $i,
+                'thumbnail' => null,
                 'description' => 'これはテストです',
-                'video_url' => 'null',
+                'video_url' => null,
                 'alway_delivery_flg' => 0,
-                'grade_id' => '1',
-            ],
-        ]);
+                'grade_id' => $gradeId,
+            ]);
+        }
     }
+}
 }

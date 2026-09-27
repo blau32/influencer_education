@@ -1,0 +1,27 @@
+
+.user_info {
+  display: flex;
+  align-items: left;
+  margin-bottom: 20px;
+}
+
+.user_info_text {
+font-size: 1.5em;
+margin-top: 100px;
+margin-left: 20px;
+}
+
+.curriculum_progress {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 1行に3つ */
+  gap: 24px;
+  align-items: start;
+}
+
+.curriculum_progress_item_title {
+  display: inline-block;
+  color: white;
+  background-color: aqua;
+  border-radius: 5px;
+
+}

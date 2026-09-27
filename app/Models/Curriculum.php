@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Curriculum;
 
-class Grade extends Model
+class Curriculum extends Model
 {
     use HasFactory;
 
-    public function curriculums()
-    {
-        return $this->hasMany(Curriculum::class);
-    }
+    protected $table = 'curriculums';
 }
