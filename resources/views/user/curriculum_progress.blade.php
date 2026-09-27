@@ -31,10 +31,10 @@
       <div class="user_info_text">
         <p>{{ $user->name }}さんの授業進捗</p>
         <p>
-        現在の学年：
-        <span class="current_grade {{ str_contains($user->grade->name, '高校') ? 'high-school' : '' }}">
-          {{ $user->grade->name }}
-        </span>
+          現在の学年：
+          <span class="current_grade {{ str_contains($user->grade->name, '高校') ? 'high-school' : '' }}">
+            {{ $user->grade->name }}
+          </span>
         </p>
       </div>
     </div>
@@ -52,21 +52,22 @@
 
         <div class="curriculum_item">
 
-          <span>{{ $curriculum->title }}</span>
+          <span class="status_space">
+            @if (
+            isset($progresses[$curriculum->id]) &&
+            $progresses[$curriculum->id]->clear_flg == 1
+            )
+            受講済
+            @endif
+          </span>
 
-          <input
-            type="checkbox"
-            disabled
-            @checked(
-            isset($progresses[$curriculum->id])
-          && $progresses[$curriculum->id]->clear_flg == 1
-          )
-          >
+          <span class="curriculum_title">
+            {{ $curriculum->title }}
+          </span>
 
         </div>
 
         @endforeach
-
       </div>
 
       @endforeach

@@ -1,3 +1,10 @@
+.curriculum_item input[type="checkbox"] {
+  appearance: auto;
+  -webkit-appearance: checkbox;
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+}
 
 .user_info {
   display: flex;
@@ -10,17 +17,33 @@ font-size: 1.5em;
 margin-top: 100px;
 margin-left: 20px;
 }
-
 .current_grade {
   color: white;
   background-color: rgb(26, 175, 175);
   border-radius: 5px;
   padding: 2px 5px;
 }
-
 .current_grade.high-school {
   background-color: rgb(15, 211, 103);
 }
+
+.curriculum_item {
+  display: flex;
+  align-items: center;
+}
+
+.status_space {
+  display: inline-block;
+  width: 30px;
+  color: red;
+  font-size: 0.5em;
+  font-weight: bold;
+}
+
+.curriculum_title {
+  display: inline-block;
+}
+
 
 .curriculum_progress {
   display: grid;
@@ -39,4 +62,8 @@ margin-left: 20px;
 
 .curriculum_progress_item_title.high-school {
   background-color: rgb(15, 211, 103);
+}
+
+.completed {
+
 }
