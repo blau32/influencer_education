@@ -4,9 +4,9 @@
 <div class="container">
   <div class="nav">
     <ul>
-      <li><a href="{{ route('user.show.curriculum')}}">時間割</a></li>
-      <li><a href="{{ route('user.show.progress')}}">授業進捗</a></li>
-      <li><a href="{{ route('user.show.profile')}}">プロフィール設定</a></li>
+      <li><a style="--chars: 3" href="{{ route('user.show.curriculum')}}"><span>時間割</span></a></li>
+      <li><a style="--chars: 4" href="{{ route('user.show.progress')}}"><span>授業進捗</span></a></li>
+      <li><a style="--chars: 8" href="{{ route('user.show.profile')}}"><span>プロフィール設定</span></a></li>
       <li class="logout">
         <form method="POST" action="#">
           @csrf
@@ -25,7 +25,6 @@
 
 
   <div class="contents">
-
     <div class="user_info">
       <img src="{{ asset('storage/' . $user->profile_image) }}">
       <div class="user_info_text">

@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('user')->namespace('User')->name('user.')->group(function () {
-    
+
     // ログイン
     Route::get('/login',[User\LoginController::class, 'showLoginForm'])->name('show.login');
 

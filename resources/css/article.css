@@ -1,6 +1,5 @@
 /* お知らせページ */
-.contents p {
-  font-size: 1em;
+.contents .date p {
   margin-bottom: 5px;
 }
 .contents h1 {
@@ -8,6 +7,6 @@
   margin-bottom:20px;
 }
 
-.article_contents p {
+.contents .article_contents p {
   font-size: 1.2em;
 }

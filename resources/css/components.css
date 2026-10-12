@@ -1,36 +1,67 @@
 /* 共通コンポーネント */
+body {
+  margin: 0;
+}
+
 .nav {
     background-color: #f87a3a;
-    padding: 3%;
-    width: 100%;
+    padding: 15px 20px;
+
 }
 
 .nav ul {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  list-style: none;
 }
 
 .nav li {
-  padding-right: 20px;
-  font-size: 1.2em;
-  color: white;
-  background-color: rgb(18, 153, 155);
-  padding: 2px 15px;
+  flex-shrink: 0;
+}
+
+.nav li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  container-type: inline-size;
+  width: 120px;
+  height: 32px;
   margin-right: 10px;
+  padding: 0 6px;
+  overflow: hidden;
+  background-color: #048b75;
+  color: white;
   border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+.nav li a span {
+  font-size: min(1em, calc(92cqw / var(--chars)));
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .nav li.logout {
   margin-left: auto;
-  background-color: transparent;
   color: black;
 }
 
-.contents {
-  margin: 50px;
+.nav li.logout button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
 }
 
 .back {
   margin-left: 20px;
 }
+
+.contents {
+  margin: 30px;
+}
+
