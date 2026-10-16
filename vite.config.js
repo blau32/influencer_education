@@ -9,6 +9,7 @@ export default defineConfig({
                 "resources/css/components.css",
                 "resources/css/article.css",
                 "resources/css/curriculum_progress.css",
+                "resources/css/profile.css",
                 "resources/js/app.js",
             ],
             refresh: true,

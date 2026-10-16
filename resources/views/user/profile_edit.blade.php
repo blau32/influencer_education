@@ -23,14 +23,13 @@
   </div>
 
   <div class="contents">
-    <h1>プロフィール設定</h1>
+    <p class="contents_title">プロフィール変更</p>
     <div class="user_profile">
-      <img src="{{ asset('storage/' . $user->profile_image) }}">
-      <div class="user_profile_image">
-        <p>プロフィール画像</p>
-        <input type="file" name="profile_image">
-        <p>ファイルを選択</p>
-      </div>
+  <div class="user_profile_image">
+    <img src="{{ asset('storage/' . $user->profile_image) }}">
+    <p>プロフィール画像</p>
+    <input type="file" name="profile_image">
+  </div>
 
       <div class="user_profile_text">
         <form method="PUT" action="#">

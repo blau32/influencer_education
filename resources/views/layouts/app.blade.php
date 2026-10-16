@@ -25,6 +25,7 @@
   'resources/css/components.css',
   'resources/css/article.css',
   'resources/css/curriculum_progress.css',
+  'resources/css/profile.css',
   ])
 
 </head>
