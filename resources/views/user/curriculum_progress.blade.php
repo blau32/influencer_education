@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
+@section('title', '進捗')
+
 @section('content')
+
 <div class="container">
   <div class="nav">
     <ul>
@@ -51,14 +54,15 @@
 
         <div class="curriculum_item">
 
-          <span class="status_space">
+          <!-- 受講済み表示テスト -->
+          <!-- <span class="status_space">
             @if (
             isset($progresses[$curriculum->id]) &&
             $progresses[$curriculum->id]->clear_flg == 1
             )
             受講済
             @endif
-          </span>
+          </span> -->
 
           <span class="curriculum_title">
             {{ $curriculum->title }}

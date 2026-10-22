@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
+@section('title', 'お知らせ')
+
 @section('content')
+
+
 <div class="container">
   <div class="nav">
     <ul>

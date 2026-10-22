@@ -1,4 +1,8 @@
 /* 共通コンポーネント */
+/* html {
+  font-size: 1.25vw;
+} */
+
 body {
   margin: 0;
 }
@@ -63,6 +67,9 @@ body {
 }
 
 .contents {
-  margin: 30px;
+  width: 30%;
+  margin: 30px auto;
+  display: block;
+  justify-content: left;
 }
 

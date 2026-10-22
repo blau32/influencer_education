@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
+@section('title', 'プロフィール設定')
+
 @section('content')
+
 <div class="container">
   <div class="nav">
     <ul>
@@ -24,29 +27,62 @@
 
   <div class="contents">
     <p class="contents_title">プロフィール変更</p>
-    <div class="user_profile">
-  <div class="user_profile_image">
-    <img src="{{ asset('storage/' . $user->profile_image) }}">
-    <p>プロフィール画像</p>
-    <input type="file" name="profile_image">
-  </div>
 
-      <div class="user_profile_text">
-        <form method="PUT" action="#">
-          @csrf
-          <p>ユーザーネーム</p>
-          <input type="text" name="name" value="{{ $user->name }}">
-          <p>カナ</p>
-          <input type="text" name="kana" value="{{ $user->kana }}">
-          <p>メールアドレス</p>
-          <input type="email" name="email" value="{{ $user->email }}">
-          <p>パスワード</p>
-          <input type="password" name="password" value="{{ $user->password }}">
-          <button type="submit">保存</button>
-        </form>
+    @if (session('success'))
+    <p class="profile_success">
+      {{ session('success') }}
+    </p>
+    @endif
+
+    <form method="POST"
+      action="{{ route('user.update.profile') }}"
+      enctype="multipart/form-data">
+      @csrf
+
+      <div class="user_profile">
+
+        <div class="user_profile_image">
+          <img src="{{ asset('storage/' . $user->profile_image) }}">
+          <p>プロフィール画像</p>
+          <input type="file" name="profile_image">
+        </div>
+
+        <div class="user_profile_text">
+
+          <label class="user_profile_row">
+            ユーザーネーム
+            <input type="text" name="name" value="{{ $user->name }}">
+          </label>
+
+          <label class="user_profile_row">
+            カナ
+            <input type="text" name="name_kana" value="{{ $user->name_kana }}">
+          </label>
+
+          <label class="user_profile_row">
+            メールアドレス
+            <input type="email" name="email" value="{{ $user->email }}">
+          </label>
+
+          <div class="user_profile_row">
+            <p>パスワード</p>
+            <a
+              class="user_profile_password"
+              href="{{ route('user.show.password.edit') }}">
+              パスワードを変更する
+            </a>
+          </div>
+
+        </div>
       </div>
 
-    </div>
+      <div class="user_profile_button">
+        <button class="user_profile_register" type="submit">
+          登録
+        </button>
+      </div>
 
+    </form>
   </div>
-  @endsection
+</div>
+@endsection

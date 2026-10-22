@@ -21,8 +21,8 @@ Route::get('/', function () {
 
 Route::prefix('user')->namespace('User')->name('user.')->group(function () {
 
-    // ログイン
-    Route::get('/login',[User\LoginController::class, 'showLoginForm'])->name('show.login');
+    // ログイン（未ログインでもアクセス可能）
+    Route::get('/login', [User\LoginController::class, 'showLoginForm'])->name('show.login');
 
     // 登録
     // Route::get('/register',[User\RegisterController::class, 'showRegisterForm'])->name('show.register');
@@ -31,22 +31,28 @@ Route::prefix('user')->namespace('User')->name('user.')->group(function () {
     // Route::get('/top',[User\TopController::class, 'showTop'])->name('show.top');
 
     // お知らせページ
-    Route::get('/article/{id}',[User\ArticleController::class, 'showArticle'])->name('show.article');
+    Route::get('/article/{id}', [User\ArticleController::class, 'showArticle'])->name('show.article');
 
     // 時間割ページ
-    Route::get('/curriculum_list',[User\CurriculumController::class, 'showCurriculumList'])->name('show.curriculum');
+    Route::get('/curriculum_list', [User\CurriculumController::class, 'showCurriculumList'])->name('show.curriculum');
 
     // 配信ページ
     // Route::get('/delivery/{id}',[User\DeliveryController::class, 'showDelivery'])->name('show.delivery');
 
     // 授業進捗ページ
-    Route::get('/progress',[User\ProgressController::class, 'showProgress'])->name('show.progress');
+    Route::get('/progress', [User\ProgressController::class, 'showProgress'])->name('show.progress');
 
     // プロフィール設定ページ
-    Route::get('/profile',[User\ProfileController::class, 'showProfileForm'])->name('show.profile');
+    Route::get('/profile', [User\ProfileController::class, 'showProfileForm'])->name('show.profile');
+
+    // プロフィール更新
+    Route::post('/profile', [User\ProfileController::class, 'updateProfile'])->name('update.profile');
 
     // パスワード変更ページ
-    // Route::get('/password',[User\PasswordController::class, 'showPasswordForm'])->name('show.password.edit');
+    Route::get('/password', [User\ProfileController::class, 'showPasswordForm'])->name('show.password.edit');
+
+    // パスワード更新
+    Route::post('/password', [User\ProfileController::class, 'updatePassword'])->name('update.password');
 });
 
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
@@ -57,8 +63,8 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // Route::get('/curriculum_create',[Admin\CurriculumController::class, 'showCurriculumCreate'])->name('show.curriculum_create');
     // Route::get('/curriculum_edit/{id}',[Admin\CurriculumController::class, 'showCurriculumEdit'])->name('show.curriculum');
     // Route::get('/delivery_edit/{id}',[Admin\DeliveryController::class, 'showDeliveryEdit'])->name('show.delivery_edit');
-    Route::get('/article_list',[Admin\ArticleController::class, 'showArticleList'])->name('show.article_list');
-    Route::get('/article_create',[Admin\ArticleController::class, 'showArticleCreate'])->name('show.article_create');
-    Route::get('/article_edit/{id}',[Admin\ArticleController::class, 'showArticleEdit'])->name('show.article_edit');
+    Route::get('/article_list', [Admin\ArticleController::class, 'showArticleList'])->name('show.article_list');
+    Route::get('/article_create', [Admin\ArticleController::class, 'showArticleCreate'])->name('show.article_create');
+    Route::get('/article_edit/{id}', [Admin\ArticleController::class, 'showArticleEdit'])->name('show.article_edit');
     // Route::get('/banner_edit',[Admin\BannerController::class, 'showBannerEdit'])->name('show.banner_edit');
-    });
+});

@@ -28,7 +28,6 @@
 
 .curriculum_progress {
     display: grid;
-
     grid-template-columns: repeat(3, 1fr); /* 1行に3つ */
     gap: 24px;
     align-items: start;
