@@ -1,4 +1,5 @@
-/* 共通コンポーネント */
+/* ユーザー画面共通コンポーネント */
+
 /* html {
   font-size: 1.25vw;
 } */
@@ -10,7 +11,6 @@ body {
 .nav {
     background-color: #f87a3a;
     padding: 15px 20px;
-
 }
 
 .nav ul {
@@ -67,9 +67,65 @@ body {
 }
 
 .contents {
-  width: 30%;
+  width: 50%;
   margin: 30px auto;
   display: block;
   justify-content: left;
+}
+
+/* 管理画面共通コンポーネント */
+.admin_nav {
+  background-color: #00f7ff;
+  padding: 15px 20px;
+}
+
+.admin_nav ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.admin_nav li {
+  flex-shrink: 0;
+}
+
+.admin_nav li a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  container-type: inline-size;
+  width: 120px;
+  height: 32px;
+  margin-right: 10px;
+  padding: 0 6px;
+  overflow: hidden;
+  background-color: #6f7272;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+.admin_nav li a span {
+  font-size: min(1em, calc(92cqw / var(--chars)));
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.admin_nav li.logout {
+  margin-left: auto;
+  color: rgb(255, 255, 255);
+  font-size: 2em;
+}
+
+.admin_nav li.logout button {
+  color: white;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
 }
 

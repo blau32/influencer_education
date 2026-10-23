@@ -9,7 +9,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    // Article.php
+
 protected $casts = [
     'posted_date' => 'datetime',
 ];

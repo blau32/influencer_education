@@ -1,0 +1,83 @@
+/* 管理_お知らせ一覧 */
+
+.article_create_button a{
+  background-color: #048b75;
+  text-decoration: none;
+  color: white;
+  padding: 6px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.article_list_header,
+.article_list_content_item {
+  display: grid;
+  grid-template-columns: 11em 1fr auto auto;
+  column-gap: 16px;
+  align-items: center;
+}
+
+.article_list_header {
+  margin-top: 30px;
+}
+
+.article_list_content_item {
+  margin-top: 10px;
+}
+
+.article_list_header p,
+.article_list_content_item p {
+  margin: 0;
+  font-size: 1.2em;
+}
+
+.article_list_content_item a{
+  margin-right: 5px;
+  background-color: #048b75;
+  text-decoration: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.article_list_content_item button{
+  background-color: #ff0000;
+  text-decoration: none;
+  color: white;
+  padding: 6px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+/* 管理_お知らせ設定 */
+
+.admin_article_form {
+  display: grid;
+  grid-template-columns: 8em 1fr;
+  column-gap: 16px;
+  row-gap: 12px;
+  align-items: start;
+  margin-top: 40px;
+}
+
+.admin_article_form p {
+  margin: 0;
+  font-size: 1.2em;
+  white-space: nowrap;
+}
+
+.admin_article_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.admin_article_button_submit {
+  background-color: #6f7272;
+  color: white;
+  font-size: 20px;
+  border: solid 1px black;
+  padding: 0.5px 60px;
+}

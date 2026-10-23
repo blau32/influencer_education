@@ -20,7 +20,7 @@
   </div>
 
   <div class="back">
-    <a href="{{ url()->previous() !== url()->current() ? url()->previous() : route('user.show.curriculum') }}">
+    <a href="{{ url()->previous() !== url()->current() ? url()->previous() : route('admin.show.top') }}">
       ←戻る
     </a>
   </div>

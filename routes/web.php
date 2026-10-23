@@ -58,13 +58,22 @@ Route::prefix('user')->namespace('User')->name('user.')->group(function () {
 Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     // Route::get('/login',[Admin\LoginController::class, 'showLoginForm'])->name('show.login');
     // Route::get('/register',[Admin\RegisterController::class, 'showRegisterForm'])->name('show.register');
-    // Route::get('/top',[Admin\TopController::class, 'showTop'])->name('show.top');
+    Route::get('/top',[Admin\TopController::class, 'showTop'])->name('show.top');
     // Route::get('/curriculum_list',[Admin\CurriculumController::class, 'showCurriculumList'])->name('show.curriculum_list');
     // Route::get('/curriculum_create',[Admin\CurriculumController::class, 'showCurriculumCreate'])->name('show.curriculum_create');
     // Route::get('/curriculum_edit/{id}',[Admin\CurriculumController::class, 'showCurriculumEdit'])->name('show.curriculum');
     // Route::get('/delivery_edit/{id}',[Admin\DeliveryController::class, 'showDeliveryEdit'])->name('show.delivery_edit');
+
+    // お知らせ一覧
     Route::get('/article_list', [Admin\ArticleController::class, 'showArticleList'])->name('show.article_list');
-    Route::get('/article_create', [Admin\ArticleController::class, 'showArticleCreate'])->name('show.article_create');
+
+    // お知らせ変更
     Route::get('/article_edit/{id}', [Admin\ArticleController::class, 'showArticleEdit'])->name('show.article_edit');
+
+    // お知らせ更新
+    Route::post('/article_edit', [Admin\ArticleController::class, 'updateArticle'])->name('update.article');
+
+    // お知らせ新規登録
+    Route::get('/article_create', [Admin\ArticleController::class, 'showArticleCreate'])->name('show.article_create');
     // Route::get('/banner_edit',[Admin\BannerController::class, 'showBannerEdit'])->name('show.banner_edit');
 });
