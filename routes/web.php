@@ -71,9 +71,16 @@ Route::prefix('admin')->namespace('Admin')->name('admin.')->group(function () {
     Route::get('/article_edit/{id}', [Admin\ArticleController::class, 'showArticleEdit'])->name('show.article_edit');
 
     // お知らせ更新
-    Route::post('/article_edit', [Admin\ArticleController::class, 'updateArticle'])->name('update.article');
+    Route::post('/article_edit/{id}', [Admin\ArticleController::class, 'updateArticle'])->name('update.article');
 
     // お知らせ新規登録
     Route::get('/article_create', [Admin\ArticleController::class, 'showArticleCreate'])->name('show.article_create');
+
+    // お知らせ新規登録
+    Route::post('/article_create', [Admin\ArticleController::class, 'storeArticle'])->name('store.article');
+
+    // お知らせ削除
+    Route::delete('/article_delete/{id}', [Admin\ArticleController::class, 'deleteArticle'])->name('delete.article');
+
     // Route::get('/banner_edit',[Admin\BannerController::class, 'showBannerEdit'])->name('show.banner_edit');
 });

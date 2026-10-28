@@ -116,7 +116,7 @@ body {
 .admin_nav li.logout {
   margin-left: auto;
   color: rgb(255, 255, 255);
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 .admin_nav li.logout button {

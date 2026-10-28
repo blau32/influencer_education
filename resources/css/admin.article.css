@@ -50,7 +50,7 @@
   font-size: 1em;
 }
 
-/* 管理_お知らせ設定 */
+/* 管理_お知らせ設定/新規登録と兼用 */
 
 .admin_article_form {
   display: grid;

@@ -48,4 +48,35 @@ class ArticleController extends Controller
     {
         return view('admin.article_create');
     }
+
+    public function storeArticle(Request $request)
+    {
+        $validated = $request->validate([
+            'posted_date' => ['required', 'date'],
+            'title' => ['required', 'string', 'max:255'],
+            'article_contents' => ['required', 'string'],
+        ]);
+
+        $article = new Article();
+
+        $article->posted_date = $validated['posted_date'];
+        $article->title = $validated['title'];
+        $article->article_contents = $validated['article_contents'];
+
+        $article->save();
+
+        return redirect()
+            ->route('admin.show.article_list')
+            ->with('success', 'お知らせを登録しました。');
+    }
+
+    public function deleteArticle(int $id)
+    {
+        $article = Article::findOrFail($id);
+        $article->delete();
+
+        return redirect()
+            ->route('admin.show.article_list')
+            ->with('success', 'お知らせを削除しました。');
+    }
 }

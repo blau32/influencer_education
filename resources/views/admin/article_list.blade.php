@@ -30,6 +30,12 @@
 
     <p class="contents_title">お知らせ一覧</p>
 
+    @if (session('success'))
+    <p class="profile_success">
+      {{ session('success') }}
+    </p>
+    @endif
+
     <div class="article_create_button">
       <a href="{{ route('admin.show.article_create')}}">新規登録</a>
     </div>
@@ -47,7 +53,8 @@
           <p>{{ $article->posted_date->format('Y年n月j日') }}</p>
           <p>{{ $article->title }}</p>
           <a href="{{ route('admin.show.article_edit', $article->id) }}">変更する</a>
-          <form method="POST" action="admin.show.article_edit">
+          <form method="POST" action="{{ route('admin.delete.article', $article->id) }}"
+          onsubmit="return confirm('このお知らせを削除しますか？');">
             @csrf
             @method('DELETE')
             <button type="submit">削除</button>

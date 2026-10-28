@@ -26,7 +26,7 @@
     </a>
   </div>
 
-  <form method="POST" action="{{ route('admin.update.article') }}">
+  <form method="POST" action="{{ route('admin.update.article', $article->id) }}">
     @csrf
     <input type="hidden" name="id" value="{{ $article->id }}">
     <div class="contents">
