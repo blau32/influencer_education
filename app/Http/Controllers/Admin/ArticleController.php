@@ -23,17 +23,25 @@ class ArticleController extends Controller
         return view('admin.article_edit', ['article' => $article]);
     }
 
-    public function updateArticle(Request $request)
+    public function updateArticle(Request $request, int $id)
     {
-        $validated = $request->validate([
-            'posted_date' => ['required', 'date'],
-            'title' => ['required', 'string', 'max:255'],
-            'article_contents' => ['required', 'string'],
-        ]);
+        $validated = $request->validate(
+            [
+                'title' => ['required', 'string', 'max:255'],
+                'article_contents' => ['required', 'string','max:255'],
+            ],
+            [
+                'title.required' => 'タイトルを入力してください。',
+                'title.string' => 'タイトルを文字列で入力してください。',
+                'title.max' => 'タイトルは255文字以内で入力してください。',
+                'article_contents.required' => '本文を入力してください。',
+                'article_contents.string' => '本文を文字列で入力してください。',
+                'article_contents.max' => '本文は255文字以内で入力してください。',
+            ]
+        );
 
-        $article = Article::findOrFail($request->id);
+        $article = Article::findOrFail($id);
 
-        $article->posted_date = $validated['posted_date'];
         $article->title = $validated['title'];
         $article->article_contents = $validated['article_contents'];
 
@@ -51,15 +59,24 @@ class ArticleController extends Controller
 
     public function storeArticle(Request $request)
     {
-        $validated = $request->validate([
-            'posted_date' => ['required', 'date'],
+        $validated = $request->validate(
+            [
             'title' => ['required', 'string', 'max:255'],
-            'article_contents' => ['required', 'string'],
-        ]);
+            'article_contents' => ['required', 'string','max:255'],
+        ],
+        [
+            'title.required' => 'タイトルを入力してください。',
+            'title.string' => 'タイトルを文字列で入力してください。',
+            'title.max' => 'タイトルは255文字以内で入力してください。',
+            'article_contents.required' => '本文を入力してください。',
+            'article_contents.string' => '本文を文字列で入力してください。',
+            'article_contents.max' => '本文は255文字以内で入力してください。',
+        ]
+        );
 
         $article = new Article();
 
-        $article->posted_date = $validated['posted_date'];
+        $article->posted_date = now();
         $article->title = $validated['title'];
         $article->article_contents = $validated['article_contents'];
 

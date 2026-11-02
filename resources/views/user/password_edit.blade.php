@@ -39,38 +39,48 @@
       action="{{ route('user.update.password') }}">
       @csrf
 
-      <div class="user_profile_text">
+      <div class="user_profile_text password_fields">
 
-        <label class="user_profile_row">
-          旧パスワード
-          <input type="password"
-            name="old_password"
-            placeholder="利用中のパスワードを入力してください">
-        </label>
+<div class="user_profile_row">
+  <label for="old_password">旧パスワード</label>
+  <div>
+    <input id="old_password"
+      type="password"
+      name="old_password"
+      value="{{ old('old_password') }}"
+      placeholder="利用中のパスワードを入力してください">
+    @error('old_password')
+      <p class="profile_error">{{ $message }}</p>
+    @enderror
+  </div>
+</div>
 
-        @error('old_password')
-        <p class="profile_error">{{ $message }}</p>
-        @enderror
+<div class="user_profile_row">
+  <label for="new_password">新パスワード</label>
+  <div>
+    <input id="new_password"
+      type="password"
+      name="new_password"
+      value="{{ old('new_password') }}"
+      placeholder="新しいパスワードを入力してください">
+    @error('new_password')
+      <p class="profile_error">{{ $message }}</p>
+    @enderror
+  </div>
+</div>
 
-        <label class="user_profile_row">
-          新パスワード
-          <input type="password"
-            name="new_password"
-            placeholder="新しいパスワードを入力してください">
-        </label>
+<div class="user_profile_row">
+  <label for="new_password_confirmation">新パスワード確認</label>
+  <div>
+    <input id="new_password_confirmation"
+      type="password"
+      name="new_password_confirmation"
+      value="{{ old('new_password_confirmation') }}"
+      placeholder="再度パスワードを入力してください">
+  </div>
+</div>
 
-        @error('new_password')
-        <p class="profile_error">{{ $message }}</p>
-        @enderror
-
-        <label class="user_profile_row">
-          新パスワード確認
-          <input type="password"
-            name="new_password_confirmation"
-            placeholder="再度パスワードを入力してください">
-        </label>
-      </div>
-
+</div>
       <div class="user_profile_button">
         <button class="user_profile_register" type="submit">
           登録

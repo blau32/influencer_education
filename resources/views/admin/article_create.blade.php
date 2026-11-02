@@ -20,11 +20,10 @@
   </div>
 
   <div class="back">
-    <a href="#">
-      <!-- <a href="{{ url()->previous() !== url()->current() ? url()->previous() : route('user.show.curriculum') }}"> -->
-      ←戻る
+    <a href="{{ route('admin.show.article_list') }}">
+        ←戻る
     </a>
-  </div>
+</div>
 
   <form method="POST" action="{{ route('admin.store.article') }}">
     @csrf
@@ -33,16 +32,25 @@
 
       <div class="admin_article_form">
         <p>投稿日時</p>
-        <input type="date"
-          name="posted_date">
+        <div>
+          <p>{{ now()->format('Y年n月j日') }}</p>
+        </div>
+
         <p>タイトル</p>
-        <input type="text"
-          name="title">
+        <div>
+          <input type="text" name="title" value="{{ old('title') }}">
+          @error('title')
+          <p class="admin_article_error">{{ $message }}</p>
+          @enderror
+        </div>
+
         <p>本文</p>
-        <textarea
-          name="article_contents"
-          id="article_contents"
-          rows="10"></textarea>
+        <div>
+          <textarea name="article_contents" id="article_contents" rows="10">{{ old('article_contents') }}</textarea>
+          @error('article_contents')
+          <p class="admin_article_error">{{ $message }}</p>
+          @enderror
+        </div>
       </div>
 
       <div class="admin_article_button">

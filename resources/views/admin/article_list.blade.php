@@ -19,12 +19,13 @@
     </ul>
   </div>
 
-  <div class="back">
-    <a href="#">
-      <!-- <a href="{{ url()->previous() !== url()->current() ? url()->previous() : route('user.show.curriculum') }}"> -->
+
+  <!-- Admin\TopController.php完成時に変更 -->
+  <!-- <div class="back">
+    <a href="{{ route('admin.show.top') }}">
       ←戻る
     </a>
-  </div>
+  </div> -->
 
   <div class="contents">
 
@@ -54,7 +55,7 @@
           <p>{{ $article->title }}</p>
           <a href="{{ route('admin.show.article_edit', $article->id) }}">変更する</a>
           <form method="POST" action="{{ route('admin.delete.article', $article->id) }}"
-          onsubmit="return confirm('このお知らせを削除しますか？');">
+            onsubmit="return confirm('このお知らせを削除しますか？');">
             @csrf
             @method('DELETE')
             <button type="submit">削除</button>

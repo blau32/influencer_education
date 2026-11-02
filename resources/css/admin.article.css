@@ -81,3 +81,16 @@
   border: solid 1px black;
   padding: 0.5px 60px;
 }
+
+.admin_article_form .admin_article_error {
+  color: rgb(255, 0, 0);
+  margin: 4px 0 0;
+  font-size: 14px;
+  white-space: normal;
+}
+
+.admin_article_form input[type="text"],
+.admin_article_form textarea {
+  width: 100%;
+  box-sizing: border-box;
+}

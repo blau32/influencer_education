@@ -118,8 +118,22 @@
 }
 
 /* パスワード変更フォーム */
+.password_fields .user_profile_row {
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.password_fields label {
+  margin-bottom: 0;
+}
+
+.password_fields .user_profile_row input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .profile_error {
   color: rgb(255, 0, 0);
-  margin: 4px 0 10px 8em;
+  margin: 4px 0 0;
   font-size: 14px;
 }

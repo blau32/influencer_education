@@ -20,32 +20,37 @@
   </div>
 
   <div class="back">
-    <a href="#">
-      <!-- <a href="{{ url()->previous() !== url()->current() ? url()->previous() : route('user.show.curriculum') }}"> -->
-      ←戻る
+    <a href="{{ route('admin.show.article_list') }}">
+        ←戻る
     </a>
-  </div>
+</div>
 
   <form method="POST" action="{{ route('admin.update.article', $article->id) }}">
     @csrf
-    <input type="hidden" name="id" value="{{ $article->id }}">
     <div class="contents">
       <p class="contents_title">お知らせ変更</p>
 
       <div class="admin_article_form">
         <p>投稿日時</p>
-        <input type="date"
-          name="posted_date"
-          value="{{ $article->posted_date->format('Y-m-d') }}">
+        <div>
+          <p>{{ $article->posted_date->format('Y年n月j日') }}</p>
+        </div>
+
         <p>タイトル</p>
-        <input type="text"
-          name="title"
-          value="{{ $article->title }}">
+        <div>
+          <input type="text" name="title" value="{{ old('title', $article->title) }}">
+          @error('title')
+          <p class="admin_article_error">{{ $message }}</p>
+          @enderror
+        </div>
+
         <p>本文</p>
-        <textarea
-          name="article_contents"
-          id="article_contents"
-          rows="10">{{ $article->article_contents }}</textarea>
+        <div>
+          <textarea name="article_contents" id="article_contents" rows="10">{{ old('article_contents', $article->article_contents) }}</textarea>
+          @error('article_contents')
+          <p class="admin_article_error">{{ $message }}</p>
+          @enderror
+        </div>
       </div>
 
       <div class="admin_article_button">
