@@ -21,9 +21,9 @@
 
   <div class="back">
     <a href="{{ route('admin.show.article_list') }}">
-        ←戻る
+      ←戻る
     </a>
-</div>
+  </div>
 
   <form method="POST" action="{{ route('admin.store.article') }}">
     @csrf

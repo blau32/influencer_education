@@ -20,12 +20,13 @@
   </div>
 
 
-  <!-- Admin\TopController.php完成時に変更 -->
-  <!-- <div class="back">
+  {{--user.show.top作成後コメントアウト削除
+  <div class="back">
     <a href="{{ route('admin.show.top') }}">
       ←戻る
     </a>
-  </div> -->
+  </div>
+  --}}
 
   <div class="contents">
 

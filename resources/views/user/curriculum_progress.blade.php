@@ -19,11 +19,13 @@
     </ul>
   </div>
 
+  {{--user.show.top作成後コメントアウト削除
   <div class="back">
-    <a href="{{ url()->previous() !== url()->current() ? url()->previous() : route('user.show.curriculum') }}">
+    <a href="{{ route('user.show.top') }}">
       ←戻る
     </a>
   </div>
+  --}}
 
 
 
